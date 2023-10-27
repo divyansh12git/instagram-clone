@@ -10,6 +10,10 @@ import 'package:instagram/resources/storage_method.dart';
 class AuthMethod{
   final FirebaseAuth _auth=FirebaseAuth.instance;
   final FirebaseFirestore _firestore=FirebaseFirestore.instance;
+  
+  
+  
+  
   //sign up the user
   Future<String> signUpUser({
     required String email,
@@ -18,6 +22,7 @@ class AuthMethod{
     required String username,
     required Uint8List file,
   })async{
+    
       String res="Some error occured";
       try {
         if(email.isNotEmpty || password.isNotEmpty || username.isNotEmpty || bio.isNotEmpty || file !=Null ){
@@ -42,7 +47,7 @@ class AuthMethod{
           });
 
           res="success";
-        return res;
+        
        
        
         }
@@ -54,8 +59,30 @@ class AuthMethod{
       
       catch(err){
         res=err.toString();
-        return res;
+        
       }
-      return "done";
+      return res;
+  }
+
+
+  //login the user
+
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  })async{
+    String res="Some errror occured";
+    try{
+      if(email.isNotEmpty || password.isNotEmpty){
+        await _auth.signInWithEmailAndPassword(email: email, password: password);
+        res="success";
+      }
+      else{
+        res="enter all the fields";
+      }
+    }catch(err){
+      res=err.toString();
+    }
+    return res;
   }
 }
