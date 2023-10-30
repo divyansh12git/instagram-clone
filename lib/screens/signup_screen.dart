@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram/resources/auth.dart';
+import 'package:instagram/screens/login_screen.dart';
+import '../responsive/mobileScreenLayout.dart';
+import '../responsive/responsive_screen.dart';
+import '../responsive/webscreenLayout.dart';
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
+import 'home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -23,8 +28,8 @@ class _LoginScreenState extends State<SignUpScreen> {
   bool _isLoading = false;
 
   void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery,_image);
-    
+    Uint8List im = await pickImage(ImageSource.gallery, _image);
+
     setState(() {
       _image = im;
     });
@@ -46,7 +51,20 @@ class _LoginScreenState extends State<SignUpScreen> {
 
     if (res != 'success') {
       showSnackBar(res, context);
-    } else {}
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            //pushReplacement will replace the navgation history 
+                            //and it will not allow to go back
+          builder: (context) => const ResponsiveLayout(
+                mobileScreenLayout: AppScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              )));
+    }
+  }
+
+  void NavigateToLogin() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -136,8 +154,7 @@ class _LoginScreenState extends State<SignUpScreen> {
                       child: _isLoading
                           ? Center(
                               child: CircularProgressIndicator(
-                                color:primaryColor
-                              ),
+                                  color: primaryColor),
                             )
                           : const Text("Login"),
                       width: double.infinity,
@@ -166,8 +183,9 @@ class _LoginScreenState extends State<SignUpScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                     GestureDetector(
+                      onTap: NavigateToLogin,
                       child: Container(
-                        child: Text("Sign up",
+                        child: Text("Sign in",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             )),
