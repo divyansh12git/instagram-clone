@@ -28,7 +28,7 @@ class _LoginScreenState extends State<SignUpScreen> {
   bool _isLoading = false;
 
   void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery, _image);
+    Uint8List im = await pickImage(ImageSource.gallery);
 
     setState(() {
       _image = im;
@@ -52,13 +52,16 @@ class _LoginScreenState extends State<SignUpScreen> {
     if (res != 'success') {
       showSnackBar(res, context);
     } else {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            //pushReplacement will replace the navgation history 
-                            //and it will not allow to go back
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          //pushReplacement will replace the navgation history
+          //and it will not allow to go back
           builder: (context) => const ResponsiveLayout(
-                mobileScreenLayout: AppScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
-              )));
+            mobileScreenLayout: AppScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
   }
 
@@ -166,7 +169,7 @@ class _LoginScreenState extends State<SignUpScreen> {
                               Radius.circular(4),
                             ),
                           ),
-                          color: blueColor)),
+                          color: blueColor),),
                 ),
                 SizedBox(
                   height: 12,
