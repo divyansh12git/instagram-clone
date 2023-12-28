@@ -46,7 +46,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
-  _selectImage(BuildContext context) async {
+  _selectImage(BuildContext  context) async {
     return showDialog(
         context: context,
         builder: (context) {
